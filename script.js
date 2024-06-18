@@ -99,12 +99,11 @@ function getHumanChoice() {
   return humanChoice;
 }
 
-const humanChoice = getHumanChoice();
-const computerChoice = getComputerChoice();
-
 // Play 5 rounds
 try {
   for (let round = 0; round < ROUNDS_PLAYED; round++) {
+    const humanChoice = getHumanChoice();
+    const computerChoice = getComputerChoice();
     playRound(humanChoice, computerChoice);
   }
 }
