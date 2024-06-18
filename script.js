@@ -111,3 +111,14 @@ try {
 catch (err) {
   console.log("Error thrown: " + err);
 }
+
+// Announce results
+if (humanScore > computerScore) {
+  console.log("You won, congratulations!");
+}
+else if (computerScore > humanScore) {
+  console.log("You lose, try again next time!");
+}
+else {
+  console.log("You tied. Keep on trying!");
+}
