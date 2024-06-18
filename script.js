@@ -26,11 +26,11 @@ function rockPaperScissors(humanChoice, computerChoice) {
   try {
     let humanValue = ROCK_PAPER_SCISSORS_MAP[humanChoice];
     let computerValue = ROCK_PAPER_SCISSORS_MAP[computerChoice];
-    if (humanValue === (computerValue + 1) % Object.keys(ROCK_PAPER_SCISSORS_MAP)) {
+    if (humanValue === (computerValue + 1) % Object.keys(ROCK_PAPER_SCISSORS_MAP).length) {
       return "Win";
     }
     
-    if (computerValue === (humanValue + 1) % Object.keys(ROCK_PAPER_SCISSORS_MAP)) {
+    if (computerValue === (humanValue + 1) % Object.keys(ROCK_PAPER_SCISSORS_MAP).length) {
       return "Lose";
     }
     
@@ -62,7 +62,7 @@ function playRound(humanChoice, computerChoice) {
       break;
     case "Lose":
       console.log("You lose! " + casedComputerChoice + " beats " 
-      + casedComputerChoice + ".");
+      + casedHumanChoice + ".");
       computerScore++;
       break;
     case "Tie":
