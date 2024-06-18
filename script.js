@@ -1,12 +1,9 @@
 /*  Contains the javascript code for the functions
     and variables needed to create a simple R-P-S game 
     against the console */
-
-// Global Constants
 const ROUNDS_PLAYED = 5;
 const ROCK_PAPER_SCISSORS_MAP = {"Rock": 0, "Paper": 1, "Scissors": 2};
 
-// Global variables for the score count
 let computerScore = 0;
 let humanScore = 0;
 
@@ -47,12 +44,11 @@ function playRound(humanChoice, computerChoice) {
   let casedHumanChoice = humanChoice.substr(0, 1).toUpperCase() + humanChoice.substr(1).toLowerCase();
   let casedComputerChoice = computerChoice.substr(0, 1).toUpperCase() + computerChoice.substr(1).toLowerCase();
   
-  // Check validity
   if (!checkValidChoice(casedHumanChoice) || !checkValidChoice(casedComputerChoice)) {
     throw "Invalid input for the choices";
   }
   
-  // Perform round and declare winner
+  // Utilize a function and switch statement to determine the winner
   let roundResult = rockPaperScissors(casedHumanChoice, casedComputerChoice);
 
   switch(roundResult) {
@@ -94,12 +90,12 @@ function getComputerChoice() {
 function getHumanChoice() {
   let humanChoice = prompt("Please make your decision for Rock, Paper, Scissors:");
 
-  // Uncomment below if playing from terminal, as prompt only works on browser
+  // Uncomment and manually enter choices below if playing from the terminal, as prompt only works on browser
   // let humanChoice = "papEr";
   return humanChoice;
 }
 
-// Play 5 rounds
+// The main function of this program is determined by the # of rounds played
 for (let round = 0; round < ROUNDS_PLAYED; round++) {
   try {
     const humanChoice = getHumanChoice();
@@ -112,7 +108,6 @@ for (let round = 0; round < ROUNDS_PLAYED; round++) {
   }
 }
 
-// Announce results
 if (humanScore > computerScore) {
   console.log("You won, congratulations!");
 }
