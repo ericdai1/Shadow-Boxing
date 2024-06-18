@@ -2,10 +2,13 @@
     and variables needed to create a simple R-P-S game 
     against the console */
 
+// Global Constants
+const ROUNDS_PLAYED = 5;
+const ROCK_PAPER_SCISSORS_MAP = {"Rock": 0, "Paper": 1, "Scissors": 2};
+
 // Global variables for the score count
 let computerScore = 0;
 let humanScore = 0;
-const ROCK_PAPER_SCISSORS_MAP = {"Rock": 0, "Paper": 1, "Scissors": 2};
 
 /* Validity check for Rock Paper Scissors */
 function validChoice(choice) {
@@ -21,20 +24,20 @@ function validChoice(choice) {
     Throw exception if the RPS mapping is invalid */ 
 function rockPaperScissors(humanChoice, computerChoice) {
   try {
-    let humanValue = rockPaperScissorsMap[humanChoice];
-    let computerValue = rockPaperScissorsMap[computerChoice];
+    let humanValue = ROCK_PAPER_SCISSORS_MAP[humanChoice];
+    let computerValue = ROCK_PAPER_SCISSORS_MAP[computerChoice];
     if (humanValue === (computerValue + 1) % Object.keys(ROCK_PAPER_SCISSORS_MAP)) {
       return "Win";
     }
     
-    if (computerValue === (humanVaue + 1) % Object.keys(ROCK_PAPER_SCISSORS_MAP)) {
+    if (computerValue === (humanValue + 1) % Object.keys(ROCK_PAPER_SCISSORS_MAP)) {
       return "Lose";
     }
     
     return "Tie";
   }
-  catch {
-    throw "Invalid mapping of choices to values for the Rock Paper Scissors mapping.";
+  catch(err) {
+    return "Invalid result";
   }
 }
 
@@ -66,7 +69,7 @@ function playRound(humanChoice, computerChoice) {
       console.log("You tied! Both chose " + casedHumanChoice + ".");
       break;
     default: 
-      throw "Invalid outcome";
+      throw "invalid outcome";
   }
 }
 
@@ -87,13 +90,24 @@ function getComputerChoice() {
 }
 
 /*  Function to prompt the user to make a decision in this
-    Rock Paper Scissors game, in an attempt to beat the computer
-    Throws an exception if an invalid choice is made */
+    Rock Paper Scissors game, in an attempt to beat the computer */
 function getHumanChoice() {
   let humanChoice = prompt("Please make your decision for Rock, Paper, Scissors:");
+
+  // Uncomment below if playing from terminal, as prompt only works on browser
+  // let humanChoice = "papEr";
+  return humanChoice;
 }
 
 const humanChoice = getHumanChoice();
 const computerChoice = getComputerChoice();
 
-playRound(humanChoice, computerChoice);
+// Play 5 rounds
+try {
+  for (let round = 0; round < ROUNDS_PLAYED; round++) {
+    playRound(humanChoice, computerChoice);
+  }
+}
+catch (err) {
+  console.log("Error thrown: " + err);
+}
