@@ -11,7 +11,7 @@ let computerScore = 0;
 let humanScore = 0;
 
 /* Validity check for Rock Paper Scissors */
-function validChoice(choice) {
+function checkValidChoice(choice) {
   if (choice === "Rock" || choice === "Paper" || 
   choice === "Scissors") {
     return true;
@@ -48,11 +48,11 @@ function playRound(humanChoice, computerChoice) {
   let casedComputerChoice = computerChoice.substr(0, 1).toUpperCase() + computerChoice.substr(1).toLowerCase();
   
   // Check validity
-  if (!validChoice(casedHumanChoice) || !validChoice(casedComputerChoice)) {
+  if (!checkValidChoice(casedHumanChoice) || !checkValidChoice(casedComputerChoice)) {
     throw "Invalid input for the choices";
   }
   
-  // Perform round and
+  // Perform round and declare winner
   let roundResult = rockPaperScissors(casedHumanChoice, casedComputerChoice);
 
   switch(roundResult) {
@@ -100,15 +100,16 @@ function getHumanChoice() {
 }
 
 // Play 5 rounds
-try {
-  for (let round = 0; round < ROUNDS_PLAYED; round++) {
+for (let round = 0; round < ROUNDS_PLAYED; round++) {
+  try {
     const humanChoice = getHumanChoice();
     const computerChoice = getComputerChoice();
     playRound(humanChoice, computerChoice);
   }
-}
-catch (err) {
-  console.log("Error thrown: " + err);
+  catch (err) {
+    console.log("Error thrown: " + err);
+    round--;
+  }
 }
 
 // Announce results
