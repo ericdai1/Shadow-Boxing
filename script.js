@@ -2,26 +2,47 @@
     and variables needed to create a simple R-P-S game 
     against the console */
 const ROUNDS_PLAYED = 5;
-const ROCK_PAPER_SCISSORS_MAP = {"Rock": 0, "Paper": 1, "Scissors": 2};
+const ROCK_PAPER_SCISSORS_MAP = {'rock': 0, 'paper': 1, 'scissors': 2};
 
 let computerScore = 0;
 let humanScore = 0;
 
-// Create buttons through DOM
-let rockBtn = document.createElement("button");
-let paperBtn = document.createElement("button");
-let scissorsBtn = document.createElement("button");
-rockBtn.classList.add('button-style');
-paperBtn.classList.add('button-style');
-scissorsBtn.classList.add('button-style');
-rockBtn.textContent = "Rock";
-paperBtn.textContent = "Paper";
-scissorsBtn.textContent = "Scissors";
+// Create buttons through DOM - add container for event delegation
+let buttonContainer = document.createElement('div');
+buttonContainer.id = 'buttonContainer';
 
-const body = document.querySelector("body");
-body.appendChild(rockBtn);
-body.appendChild(paperBtn);
-body.appendChild(scissorsBtn);
+let rockBtn = document.createElement('button');
+let paperBtn = document.createElement('button');
+let scissorsBtn = document.createElement('button');
+rockBtn.classList.add('rps-button');
+rockBtn.id = 'rock';
+rockBtn.textContent = 'Rock';
+paperBtn.classList.add('rps-button');
+paperBtn.id = 'paper';
+paperBtn.textContent = 'Paper';
+scissorsBtn.classList.add('rps-button');
+scissorsBtn.id = 'scissors';
+scissorsBtn.textContent = 'Scissors';
+
+buttonContainer.appendChild(rockBtn);
+buttonContainer.appendChild(paperBtn);
+buttonContainer.appendChild(scissorsBtn);
+
+const body = document.querySelector('body');
+body.appendChild(buttonContainer);
+
+/*  Event listener in response to a certain button being clicked 
+    Utilize bubbling to handle all 3 possibilities in one */
+buttonContainer.addEventListener('click', (event) => {
+  let target = event.target;
+  if (target.tagName === 'BUTTON') {
+    let playerChoice = target.id;
+    if (playerChoice === 'rock' || playerChoice === 'paper' || playerChoice === 'scissors') {
+      let computerChoice = getComputerChoice();
+      
+    }
+  }
+});
 
 /*  Function to check winner between human and computer choice
     Throw exception if the RPS mapping is invalid */ 
@@ -30,17 +51,15 @@ function rockPaperScissors(humanChoice, computerChoice) {
     let humanValue = ROCK_PAPER_SCISSORS_MAP[humanChoice];
     let computerValue = ROCK_PAPER_SCISSORS_MAP[computerChoice];
     if (humanValue === (computerValue + 1) % Object.keys(ROCK_PAPER_SCISSORS_MAP).length) {
-      return "Win";
+      return 'Win';
     }
     
     if (computerValue === (humanValue + 1) % Object.keys(ROCK_PAPER_SCISSORS_MAP).length) {
-      return "Lose";
+      return 'Lose';
     }
-    
-    return "Tie";
   }
   catch(err) {
-    return "Invalid result";
+    return 'Invalid result';
   }
 }
 
@@ -50,12 +69,12 @@ function getComputerChoice() {
   let randChoice = Math.floor(Math.random() * 3);
   switch(randChoice) {
     case 0:
-      return "rock";
+      return 'rock';
     case 1:
-      return "paper";
+      return 'paper';
     case 2:
-      return "scissors";
+      return 'scissors';
     default:
-      throw "Invalid random choice: " + randChoice;
+      throw 'Invalid random choice: ' + randChoice;
   }
 }

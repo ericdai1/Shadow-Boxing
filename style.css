@@ -8,7 +8,7 @@ body {
   align-items: center;
 }
 
-.button-style {
+.rps-button {
   flex: 1 1 auto;
   width: 200px;
   background-color: cyan;
