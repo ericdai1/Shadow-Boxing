@@ -1,0 +1,10 @@
+.button-style {
+  background-color: cyan;
+  color: white;
+  padding: 20px 30px;
+  border: none;
+  border-radius: 8px;
+  font-size: 24px;
+  margin: 16px;
+  
+}

@@ -98,7 +98,7 @@ function getComputerChoice() {
 /*  Function to prompt the user to make a decision in this
     Rock Paper Scissors game, in an attempt to beat the computer */
 function getHumanChoice() {
-  let humanChoice = prompt("Please make your decision for Rock, Paper, Scissors:");
+  // let humanChoice = prompt("Please make your decision for Rock, Paper, Scissors:");
 
   // Uncomment and manually enter choices below if playing from the terminal, as prompt only works on browser
   // let humanChoice = "papEr";
@@ -106,7 +106,7 @@ function getHumanChoice() {
 }
 
 // The main function of this program is determined by the # of rounds played
-while(humanScore < 5 && computerScore < 5) {
+while (humanScore < 5 && computerScore < 5) {
   try {
     const humanChoice = getHumanChoice();
     const computerChoice = getComputerChoice();
