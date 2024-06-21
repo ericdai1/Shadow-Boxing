@@ -96,7 +96,7 @@ function getHumanChoice() {
 }
 
 // The main function of this program is determined by the # of rounds played
-for (let round = 0; round < ROUNDS_PLAYED; round++) {
+while(humanScore < 5 && computerScore < 5) {
   try {
     const humanChoice = getHumanChoice();
     const computerChoice = getComputerChoice();
@@ -108,12 +108,9 @@ for (let round = 0; round < ROUNDS_PLAYED; round++) {
   }
 }
 
-if (humanScore > computerScore) {
+if (humanScore == 5) {
   console.log("You won, congratulations!");
 }
-else if (computerScore > humanScore) {
+else if (computerScore == 5) {
   console.log("You lose, try again next time!");
-}
-else {
-  console.log("You tied. Keep on trying!");
 }
