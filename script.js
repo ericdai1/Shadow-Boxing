@@ -1,7 +1,7 @@
 /*  Contains the javascript code for the functions
     and variables needed to create a simple R-P-S game 
     against the console */
-const ROUNDS_PLAYED = 5;
+const WINNER_SCORE = 5;
 const ROCK_PAPER_SCISSORS_MAP = {'rock': 0, 'paper': 1, 'scissors': 2};
 
 let playerScore = 0;
@@ -9,7 +9,7 @@ let computerScore = 0;
 
 // Create buttons through DOM - add container for event delegation
 let buttonContainer = document.createElement('div');
-buttonContainer.id = 'buttonContainer';
+buttonContainer.id = 'button-container';
 
 let rockBtn = document.createElement('button');
 let paperBtn = document.createElement('button');
@@ -34,7 +34,7 @@ let scoreDisplay = document.createElement('div');
 let playerScoreDisplay = document.createElement('p');
 let computerScoreDisplay = document.createElement('p');
 playerScoreDisplay.textContent = `Player Score: ${playerScore}`;
-computerScoreDisplay.textContent = `Player Score: ${computerScore}`;
+computerScoreDisplay.textContent = `Computer Score: ${computerScore}`;
 
 scoreDisplay.appendChild(playerScoreDisplay);
 scoreDisplay.appendChild(computerScoreDisplay);
@@ -53,15 +53,20 @@ buttonContainer.addEventListener('click', (event) => {
     let playerChoice = target.id;
 
     if (playerChoice === 'rock' || playerChoice === 'paper' || playerChoice === 'scissors') {
+      if (playerScore >= WINNER_SCORE || computerScore >= WINNER_SCORE) {
+        resetGame();
+      }
+
+      // Following handles playing the main game, as well as updating the score and/or displaying a winner
       let computerChoice = getComputerChoice();
       let result = performRockPaperScissors(playerChoice, computerChoice);
-      updateScores(result);
+      displayRoundResult(result);
 
-      if (playerScore === 5) {
-        displayWinner("player");
+      if (playerScore === WINNER_SCORE) {
+        displayWinner('Player');
       }
-      else if (computerScore === 5) {
-        displayWinner("computer");
+      else if (computerScore === WINNER_SCORE) {
+        displayWinner('Computer');
       }
     }
   }
@@ -121,7 +126,9 @@ function performRockPaperScissors(playerChoice, computerChoice) {
   }
 }
 
-function updateScores(result) {
+function displayRoundResult(result) {
+  const roundResult = document.querySelector('#roundResult');
+
   if (result === 'Win') {
     playerScore += 1;
     playerScoreDisplay.textContent = `Player Score: ${playerScore}`;
@@ -129,5 +136,33 @@ function updateScores(result) {
   else if (result === 'Lose') {
     computerScore += 1;
     computerScoreDisplay.textContent = `Computer Score: ${computerScore}`;
+  }
+}
+
+function displayWinner(winner) {
+  let winnerDisplay = document.createElement('p');
+  winnerDisplay.id = 'winner';
+
+  if (winner === 'Player') {
+    winnerDisplay.textContent = 'You won! Press any button to play again';
+  }
+  else if (winner === 'Computer') {
+    winnerDisplay.textContent = 'You lost... Press any button to try again';
+  }
+
+  body.appendChild(winnerDisplay);
+}
+
+function resetGame() {
+  playerScore = 0;
+  playerScoreDisplay.textContent = `Player Score: ${playerScore}`;
+
+  computerScore = 0;
+  computerScoreDisplay.textContent = `Computer Score: ${computerScore}`;
+
+  const winnerDisplay = document.querySelector('#winner');
+
+  if (winnerDisplay) {
+    winnerDisplay.remove();
   }
 }
