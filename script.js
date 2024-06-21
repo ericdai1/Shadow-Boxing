@@ -37,25 +37,47 @@ buttonContainer.addEventListener('click', (event) => {
   let target = event.target;
   if (target.tagName === 'BUTTON') {
     let playerChoice = target.id;
+
     if (playerChoice === 'rock' || playerChoice === 'paper' || playerChoice === 'scissors') {
       let computerChoice = getComputerChoice();
+      performRockPaperScissors(playerChoice, computerChoice);
       
+      if (humanScore === 5) {
+        
+      }
     }
   }
 });
 
+// Add event listeners for mouse events to add styling
+const buttons = document.querySelectorAll('.rps-button')
+buttons.forEach(button => {
+  button.addEventListener('mousedown', () => {
+    button.classList.add('pressed');
+  });
+
+  button.addEventListener('mouseup', () => {
+      button.classList.remove('pressed');
+  });
+
+  button.addEventListener('mouseleave', () => {
+      button.classList.remove('pressed');
+  });
+});
+
 /*  Function to check winner between human and computer choice
+    Increment the score of the winner
     Throw exception if the RPS mapping is invalid */ 
-function rockPaperScissors(humanChoice, computerChoice) {
+function performRockPaperScissors(playerChoice, computerChoice) {
   try {
-    let humanValue = ROCK_PAPER_SCISSORS_MAP[humanChoice];
+    let humanValue = ROCK_PAPER_SCISSORS_MAP[playerChoice];
     let computerValue = ROCK_PAPER_SCISSORS_MAP[computerChoice];
     if (humanValue === (computerValue + 1) % Object.keys(ROCK_PAPER_SCISSORS_MAP).length) {
-      return 'Win';
+      humanScore += 1;
     }
     
     if (computerValue === (humanValue + 1) % Object.keys(ROCK_PAPER_SCISSORS_MAP).length) {
-      return 'Lose';
+      computerScore += 1;
     }
   }
   catch(err) {

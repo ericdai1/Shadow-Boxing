@@ -11,7 +11,7 @@ body {
 .rps-button {
   flex: 1 1 auto;
   width: 200px;
-  background-color: cyan;
+  background-color: #0099ff;
   color: white;
   padding: 30px 40px;
   border: none;
@@ -19,4 +19,10 @@ body {
   font-size: 36px;
   margin: 24px;
   text-align: center;
+}
+
+.rps-button.pressed {
+  transform: translateY(2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  background-color: #0056b3;
 }
