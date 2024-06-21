@@ -1,10 +1,22 @@
+*, *::after, *::before {
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .button-style {
+  flex: 1 1 auto;
+  width: 200px;
   background-color: cyan;
   color: white;
-  padding: 20px 30px;
+  padding: 30px 40px;
   border: none;
   border-radius: 8px;
-  font-size: 24px;
-  margin: 16px;
-  
+  font-size: 36px;
+  margin: 24px;
+  text-align: center;
 }

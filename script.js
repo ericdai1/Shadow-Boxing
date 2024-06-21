@@ -11,21 +11,17 @@ let humanScore = 0;
 let rockBtn = document.createElement("button");
 let paperBtn = document.createElement("button");
 let scissorsBtn = document.createElement("button");
+rockBtn.classList.add('button-style');
+paperBtn.classList.add('button-style');
+scissorsBtn.classList.add('button-style');
+rockBtn.textContent = "Rock";
+paperBtn.textContent = "Paper";
+scissorsBtn.textContent = "Scissors";
 
 const body = document.querySelector("body");
 body.appendChild(rockBtn);
 body.appendChild(paperBtn);
 body.appendChild(scissorsBtn);
-
-/* Validity check for Rock Paper Scissors */
-function checkValidChoice(choice) {
-  if (choice === "Rock" || choice === "Paper" || 
-  choice === "Scissors") {
-    return true;
-  }
-
-  return false;
-}
 
 /*  Function to check winner between human and computer choice
     Throw exception if the RPS mapping is invalid */ 
@@ -48,37 +44,6 @@ function rockPaperScissors(humanChoice, computerChoice) {
   }
 }
 
-/*  Function to play one round of RPS 
-    Throws exception if human and computer choices aren't valid */
-function playRound(humanChoice, computerChoice) { 
-  let casedHumanChoice = humanChoice.substr(0, 1).toUpperCase() + humanChoice.substr(1).toLowerCase();
-  let casedComputerChoice = computerChoice.substr(0, 1).toUpperCase() + computerChoice.substr(1).toLowerCase();
-  
-  if (!checkValidChoice(casedHumanChoice) || !checkValidChoice(casedComputerChoice)) {
-    throw "Invalid input for the choices";
-  }
-  
-  // Utilize a function and switch statement to determine the winner
-  let roundResult = rockPaperScissors(casedHumanChoice, casedComputerChoice);
-
-  switch(roundResult) {
-    case "Win":
-      console.log("You win! " + casedHumanChoice + " beats " + casedComputerChoice + ".");
-      humanScore++;
-      break;
-    case "Lose":
-      console.log("You lose! " + casedComputerChoice + " beats " 
-      + casedHumanChoice + ".");
-      computerScore++;
-      break;
-    case "Tie":
-      console.log("You tied! Both chose " + casedHumanChoice + ".");
-      break;
-    default: 
-      throw "invalid outcome";
-  }
-}
-
 /*  Function to return a random RPS decision by the computer 
     Throws exception if random choice is not between 0-2 */
 function getComputerChoice() {
@@ -93,34 +58,4 @@ function getComputerChoice() {
     default:
       throw "Invalid random choice: " + randChoice;
   }
-}
-
-/*  Function to prompt the user to make a decision in this
-    Rock Paper Scissors game, in an attempt to beat the computer */
-function getHumanChoice() {
-  // let humanChoice = prompt("Please make your decision for Rock, Paper, Scissors:");
-
-  // Uncomment and manually enter choices below if playing from the terminal, as prompt only works on browser
-  // let humanChoice = "papEr";
-  return humanChoice;
-}
-
-// The main function of this program is determined by the # of rounds played
-while (humanScore < 5 && computerScore < 5) {
-  try {
-    const humanChoice = getHumanChoice();
-    const computerChoice = getComputerChoice();
-    playRound(humanChoice, computerChoice);
-  }
-  catch (err) {
-    console.log("Error thrown: " + err);
-    round--;
-  }
-}
-
-if (humanScore == 5) {
-  console.log("You won, congratulations!");
-}
-else if (computerScore == 5) {
-  console.log("You lose, try again next time!");
 }
