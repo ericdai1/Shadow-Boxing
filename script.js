@@ -7,6 +7,16 @@ const ROCK_PAPER_SCISSORS_MAP = {"Rock": 0, "Paper": 1, "Scissors": 2};
 let computerScore = 0;
 let humanScore = 0;
 
+// Create buttons through DOM
+let rockBtn = document.createElement("button");
+let paperBtn = document.createElement("button");
+let scissorsBtn = document.createElement("button");
+
+const body = document.querySelector("body");
+body.appendChild(rockBtn);
+body.appendChild(paperBtn);
+body.appendChild(scissorsBtn);
+
 /* Validity check for Rock Paper Scissors */
 function checkValidChoice(choice) {
   if (choice === "Rock" || choice === "Paper" || 
