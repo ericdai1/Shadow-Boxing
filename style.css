@@ -36,6 +36,18 @@ body {
   background-color: #0056b3;
 }
 
+#round-result.won {
+  color: blue;
+}
+
+#round-result.lost {
+  color: red
+}
+
+#round-result.tied {
+  color: gray
+}
+
 #winner {
   font-size: 36px;
   background-color: yellowgreen;

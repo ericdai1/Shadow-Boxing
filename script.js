@@ -2,7 +2,7 @@
     and variables needed to create a simple R-P-S game 
     against the console */
 const WINNER_SCORE = 5;
-const ROCK_PAPER_SCISSORS_MAP = {'rock': 0, 'paper': 1, 'scissors': 2};
+const ROCK_PAPER_SCISSORS_MAP = {'Rock': 0, 'Paper': 1, 'Scissors': 2};
 
 let playerScore = 0;
 let computerScore = 0;
@@ -14,12 +14,15 @@ buttonContainer.id = 'button-container';
 let rockBtn = document.createElement('button');
 let paperBtn = document.createElement('button');
 let scissorsBtn = document.createElement('button');
+
 rockBtn.classList.add('rps-button');
 rockBtn.id = 'rock';
 rockBtn.textContent = 'Rock';
+
 paperBtn.classList.add('rps-button');
 paperBtn.id = 'paper';
 paperBtn.textContent = 'Paper';
+
 scissorsBtn.classList.add('rps-button');
 scissorsBtn.id = 'scissors';
 scissorsBtn.textContent = 'Scissors';
@@ -50,17 +53,17 @@ body.appendChild(scoreDisplay);
 buttonContainer.addEventListener('click', (event) => {
   let target = event.target;
   if (target.tagName === 'BUTTON') {
-    let playerChoice = target.id;
+    let playerChoice = target.textContent;
 
-    if (playerChoice === 'rock' || playerChoice === 'paper' || playerChoice === 'scissors') {
+    if (playerChoice === 'Rock' || playerChoice === 'Paper' || playerChoice === 'Scissors') {
       if (playerScore >= WINNER_SCORE || computerScore >= WINNER_SCORE) {
         resetGame();
       }
 
       // Following handles playing the main game, as well as updating the score and/or displaying a winner
       let computerChoice = getComputerChoice();
-      let result = performRockPaperScissors(playerChoice, computerChoice);
-      displayRoundResult(result);
+      let result = getRockPaperScissorsResult(playerChoice, computerChoice);
+      displayRoundResult(result, playerChoice, computerChoice);
 
       if (playerScore === WINNER_SCORE) {
         displayWinner('Player');
@@ -94,28 +97,28 @@ function getComputerChoice() {
   let randChoice = Math.floor(Math.random() * 3);
   switch(randChoice) {
     case 0:
-      return 'rock';
+      return 'Rock';
     case 1:
-      return 'paper';
+      return 'Paper';
     case 2:
-      return 'scissors';
+      return 'Scissors';
     default:
       throw 'Invalid random choice: ' + randChoice;
   }
 }
 
-/*  Function to check winner between human and computer choice
+/*  Function to get winner between a human and computer choice
     Return the winner
     Throw exception if the RPS mapping is invalid */ 
-function performRockPaperScissors(playerChoice, computerChoice) {
+function getRockPaperScissorsResult(playerChoice, computerChoice) {
   try {
-    let humanValue = ROCK_PAPER_SCISSORS_MAP[playerChoice];
+    let playerValue = ROCK_PAPER_SCISSORS_MAP[playerChoice];
     let computerValue = ROCK_PAPER_SCISSORS_MAP[computerChoice];
-    if (humanValue === (computerValue + 1) % Object.keys(ROCK_PAPER_SCISSORS_MAP).length) {
+    if (playerValue === (computerValue + 1) % Object.keys(ROCK_PAPER_SCISSORS_MAP).length) {
       return 'Win';
     }
     
-    if (computerValue === (humanValue + 1) % Object.keys(ROCK_PAPER_SCISSORS_MAP).length) {
+    if (computerValue === (playerValue + 1) % Object.keys(ROCK_PAPER_SCISSORS_MAP).length) {
       return 'Lose'
     }
     
@@ -126,16 +129,34 @@ function performRockPaperScissors(playerChoice, computerChoice) {
   }
 }
 
-function displayRoundResult(result) {
-  const roundResult = document.querySelector('#roundResult');
+function displayRoundResult(result, playerChoice, computerChoice) {
+  let roundResult = document.querySelector('#round-result');
+
+  // In the case it's the first ever round and no results have been created
+  if (!roundResult) {
+    roundResult = document.createElement('p');
+    roundResult.id = 'round-result';
+    body.appendChild(roundResult);
+  }
+
+  // Reset classList in order to apply a className later to determine color output
+  roundResult.classList.value = '';
 
   if (result === 'Win') {
     playerScore += 1;
     playerScoreDisplay.textContent = `Player Score: ${playerScore}`;
+    roundResult.textContent = `You played ${playerChoice}, which beat the computer's choice of ${computerChoice}. You win!`
+    roundResult.classList.add('won');
   }
   else if (result === 'Lose') {
     computerScore += 1;
     computerScoreDisplay.textContent = `Computer Score: ${computerScore}`;
+    roundResult.textContent = `You played ${playerChoice}, which lost to the computer's choice of ${computerChoice}. You lost!`
+    roundResult.classList.add('lost');
+  }
+  else {
+    roundResult.textContent = `You played ${playerChoice}, which tied with the computer's choice of ${computerChoice}. Draw!`
+    roundResult.classList.add('tied');
   }
 }
 
